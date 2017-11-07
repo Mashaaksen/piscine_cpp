@@ -1,8 +1,31 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(): name("cat")
+Bureaucrat::Bureaucrat(): name("Unit")
 {
     this->grade = 150;
+}
+
+Bureaucrat::Bureaucrat(int grade, const std::string name) : name(name)
+{
+    try
+    {
+        if (grade < 1)
+        {    
+            this->grade = 1;
+            throw Bureaucrat::GradeTooHighException();
+        }
+        else if (grade > 150)
+        {    
+            this->grade = 150;
+            throw Bureaucrat::GradeTooLowException();
+        }
+        else
+            this->grade = grade;        
+    }
+    catch (std::exception &e)
+    {
+        std::cout<<this->getName()<<" "<<e.what()<<", so he will have "<<this->grade<<std::endl;
+    }
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &obj): name(obj.name)
@@ -12,12 +35,9 @@ Bureaucrat::Bureaucrat(const Bureaucrat &obj): name(obj.name)
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &obj)
 {
+    const_cast<std::string&>((this)->name) = obj.name;
     this->grade = obj.grade;
     return (*this);
-}
-
-Bureaucrat::Bureaucrat(int grade, const std::string name) : name(name), grade(grade)
-{
 }
 
 const std::string Bureaucrat::getName() const
@@ -40,7 +60,7 @@ void Bureaucrat::incrGrade()
     }
     catch (std::exception &e)
     {
-        std::cout<<this->getGrade()<<" "<<e.what()<<std::endl;
+        std::cout<<this->getGrade()<<" - 1 "<<e.what()<<std::endl;
     }
 }
 
@@ -54,7 +74,7 @@ void Bureaucrat::decrGrade()
     }
     catch (std::exception &e)
     {
-        std::cout<<this->getGrade()<<" "<<e.what()<<std::endl;
+        std::cout<<this->getGrade()<<" + 1 "<<e.what()<<std::endl;
     }
 }
 
