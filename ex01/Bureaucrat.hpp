@@ -4,6 +4,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include "Form.hpp"
+
+class Form;
 
 class Bureaucrat
 {
@@ -35,6 +38,7 @@ public:
     int getGrade() const;
     void incrGrade();
     void decrGrade();
+    void signForm(const Form &obj);
     ~Bureaucrat();
 };
 
